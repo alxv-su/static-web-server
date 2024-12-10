@@ -408,74 +408,74 @@ fn html_auto_index<'a>(
                 }
             }
             body {
-                h1 {
-                    "Index of " (current_path)
-                }
-            }
-            p {
-                small {
-                    "directories: " (dirs_count) ", files: " (files_count)
-                }
-            }
-            hr;
-            div style="overflow-x: auto;" {
-                table {
-                    thead {
-                        tr {
-                            th {
-                                a href={ "?sort=" (sort_attrs.name) } {
-                                    "Name"
-                                }
-                            }
-                            th style="width:10rem;" {
-                                a href={ "?sort=" (sort_attrs.last_modified) } {
-                                    "Last modified"
-                                }
-                            }
-                            th style="width:6rem;text-align:right;" {
-                                a href={ "?sort=" (sort_attrs.size) } {
-                                    "Size"
-                                }
-                            }
-                        }
+                    h1 {
+                        "Index of " (current_path)
                     }
-
-                    @if base_path != "/" {
-                        tr {
-                            td colspan="3" {
-                                a href="../" {
-                                    "../"
-                                }
-                            }
-                        }
+                p {
+                    small {
+                        "directories: " (dirs_count) ", files: " (files_count)
                     }
-
-                    @for entry in entries {
-                        tr {
-                            td {
-                                a href=(entry.uri) {
-                                    (entry.name.to_string_lossy())
-                                    @if entry.is_dir() {
-                                        "/"
+                }
+                hr;
+                div style="overflow-x: auto;" {
+                    table {
+                        thead {
+                            tr {
+                                th {
+                                    a href={ "?sort=" (sort_attrs.name) } {
+                                        "Name"
+                                    }
+                                }
+                                th style="width:10rem;" {
+                                    a href={ "?sort=" (sort_attrs.last_modified) } {
+                                        "Last modified"
+                                    }
+                                }
+                                th style="width:6rem;text-align:right;" {
+                                    a href={ "?sort=" (sort_attrs.size) } {
+                                        "Size"
                                     }
                                 }
                             }
-                            td {
-                                (entry.mtime.map_or("-".to_owned(), |local_dt| {
-                                    local_dt.format(DATETIME_FORMAT_LOCAL).to_string()
-                                }))
+                        }
+    
+                        @if base_path != "/" {
+                            tr {
+                                td colspan="3" {
+                                    a href="../" {
+                                        "../"
+                                    }
+                                }
                             }
-                            td align="right" {
-                                (entry.size.map(format_file_size).unwrap_or("-".into()))
+                        }
+    
+                        @for entry in entries {
+                            tr {
+                                td {
+                                    a href=(entry.uri) {
+                                        (entry.name.to_string_lossy())
+                                        @if entry.is_dir() {
+                                            "/"
+                                        }
+                                    }
+                                }
+                                td {
+                                    (entry.mtime.map_or("-".to_owned(), |local_dt| {
+                                        local_dt.format(DATETIME_FORMAT_LOCAL).to_string()
+                                    }))
+                                }
+                                td align="right" {
+                                    (entry.size.map(format_file_size).unwrap_or("-".into()))
+                                }
                             }
                         }
                     }
                 }
-            }
-            hr;
-            footer {
-                small {
-                    "Powered by Static Web Server (SWS) / static-web-server.net"
+                hr;
+                footer {
+                    small {
+                        "Powered by Static Web Server (SWS) / static-web-server.net"
+                    }
                 }
             }
         }
